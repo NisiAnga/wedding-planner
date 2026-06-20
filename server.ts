@@ -402,6 +402,10 @@ app.get("/api/health", (req, res) => {
 });
 
 async function startServer() {
+  if (process.env.VERCEL) {
+    return;
+  }
+
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
       server: { middlewareMode: true },
@@ -422,3 +426,5 @@ async function startServer() {
 }
 
 startServer();
+
+export default app;
