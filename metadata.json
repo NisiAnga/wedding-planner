@@ -1,0 +1,6 @@
+{
+  "name": "Wedding RSVP & Guest Planner",
+  "description": "An elegant, comprehensive, and responsive Wedding RSVP and Planner Dashboard web application with customizable styles and Google Sheets integration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

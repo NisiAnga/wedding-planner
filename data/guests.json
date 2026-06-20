@@ -1,0 +1,80 @@
+[
+  {
+    "id": "g1",
+    "name": "Sophia Carter",
+    "householdId": "h1",
+    "householdName": "Carter Family",
+    "isAttending": null,
+    "mealSelection": "",
+    "dietaryRestrictions": "",
+    "hasPlusOneAllowed": true,
+    "plusOneName": "",
+    "songRequest": "",
+    "boundDeviceId": ""
+  },
+  {
+    "id": "g2",
+    "name": "James Carter",
+    "householdId": "h1",
+    "householdName": "Carter Family",
+    "isAttending": null,
+    "mealSelection": "",
+    "dietaryRestrictions": "",
+    "hasPlusOneAllowed": false,
+    "plusOneName": "",
+    "songRequest": "",
+    "boundDeviceId": ""
+  },
+  {
+    "id": "g3",
+    "name": "Olivia Smith",
+    "householdId": "h2",
+    "householdName": "Smith Household",
+    "isAttending": null,
+    "mealSelection": "",
+    "dietaryRestrictions": "",
+    "hasPlusOneAllowed": true,
+    "plusOneName": "",
+    "songRequest": "",
+    "boundDeviceId": ""
+  },
+  {
+    "id": "g4",
+    "name": "Evelyn Smith",
+    "householdId": "h2",
+    "householdName": "Smith Household",
+    "isAttending": null,
+    "mealSelection": "",
+    "dietaryRestrictions": "Gluten-Free",
+    "hasPlusOneAllowed": false,
+    "plusOneName": "",
+    "songRequest": "",
+    "boundDeviceId": ""
+  },
+  {
+    "id": "g5",
+    "name": "Michael Davis",
+    "householdId": "h3",
+    "householdName": "Michael Davis & Guest",
+    "isAttending": true,
+    "mealSelection": "Filet Mignon",
+    "dietaryRestrictions": "No Peanuts",
+    "hasPlusOneAllowed": true,
+    "plusOneName": "Sarah Jenkins",
+    "songRequest": "September - Earth, Wind & Fire",
+    "boundDeviceId": ""
+  },
+  {
+    "id": "g6",
+    "name": "Emma Wilson",
+    "householdId": "h4",
+    "householdName": "Emma Wilson",
+    "isAttending": false,
+    "mealSelection": "",
+    "dietaryRestrictions": "",
+    "hasPlusOneAllowed": false,
+    "plusOneName": "",
+    "songRequest": "",
+    "boundDeviceId": ""
+  }
+]
