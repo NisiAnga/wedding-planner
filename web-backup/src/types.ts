@@ -3,7 +3,7 @@ export interface Guest {
   name: string;
   householdId: string;
   householdName: string;
-  isAttending: boolean | null; // null = pending, true = accepted, false = declined
+  isAttending: boolean | null; // null = pending, true = joyfully accepted, false = regretfully declined
   mealSelection: string;
   dietaryRestrictions: string;
   hasPlusOneAllowed: boolean;
@@ -29,6 +29,7 @@ export interface CoupleDesign {
   borderStyle: string; // "Modern Rounded" | "Double Classic" | "Vintage Regal" | "Top Accent Stripe"
   googleSheetsUrl: string;
   spreadSheetUrl?: string;
+  // RSVP Form Customization fields
   invitationWelcome: string;
   enableMealSelection: boolean;
   mealOptions: string; // Comma-separated list

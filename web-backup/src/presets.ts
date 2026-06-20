@@ -155,3 +155,96 @@ export const INITIAL_GUESTS: Guest[] = [
     songRequest: "",
   },
 ];
+
+export const GOOGLE_SHEETS_SCRIPT_TEMPLATE = `// Google Sheets Apps Script Web Service For Wedding RSVP Synchronizer
+// Copy and Paste this code directly into your Google Apps Script editor.
+
+function doPost(e) {
+  var lock = LockService.getScriptLock();
+  lock.tryLock(10000); // 10s queue handling to prevent concurrency errors
+  
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var payload = JSON.parse(e.postData.contents);
+    var timestamp = new Date();
+    
+    // Auto-create descriptive headers if the sheet is completely empty
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow([
+        "Guest ID", 
+        "Guest Name", 
+        "Household ID", 
+        "Household Name", 
+        "RSVP Status", 
+        "Meal Selection", 
+        "Dietary Restrictions", 
+        "Plus One Name", 
+        "Song Request", 
+        "Timestamp"
+      ]);
+      // Format the header line beautifully
+      sheet.getRange(1, 1, 1, 10).setFontWeight("bold").setBackground("#EDF2F7");
+    }
+    
+    // Support unified batch updates (multiple household RSVPs submitted together)
+    var guestsToSave = Array.isArray(payload) ? payload : [payload];
+    var lastRow = sheet.getLastRow();
+    
+    for (var i = 0; i < guestsToSave.length; i++) {
+      var guest = guestsToSave[i];
+      var guestId = guest.id;
+      var foundIndex = -1;
+      
+      // Look up if this Guest ID is already in our Google Sheet
+      if (lastRow > 1) {
+        var ids = sheet.getRange(2, 1, lastRow - 1, 1).getValues();
+        for (var row = 0; row < ids.length; row++) {
+          if (ids[row][0] == guestId) {
+            foundIndex = row + 2; // Rows are 1-indexed and header is at row 1
+            break;
+          }
+        }
+      }
+      
+      var statusString = "Pending";
+      if (guest.isAttending === true) statusString = "Accepts";
+      if (guest.isAttending === false) statusString = "Declines";
+      
+      var rowData = [
+        guest.id,
+        guest.name,
+        guest.householdId,
+        guest.householdName,
+        statusString,
+        guest.mealSelection || "N/A",
+        guest.dietaryRestrictions || "None",
+        guest.plusOneName || "N/A",
+        guest.songRequest || "None",
+        timestamp
+      ];
+      
+      if (foundIndex !== -1) {
+        // Upsert mode: Update the existing guest row
+        sheet.getRange(foundIndex, 1, 1, rowData.length).setValues([rowData]);
+      } else {
+        // Append mode: Insert a fresh guest row
+        sheet.appendRow(rowData);
+      }
+    }
+    
+    // Return standard success configuration
+    return ContentService.createTextOutput(JSON.stringify({ 
+      status: "success", 
+      message: "Successfully synchronized " + guestsToSave.length + " RSVPs" 
+    })).setMimeType(ContentService.MimeType.JSON);
+    
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({ 
+      status: "error", 
+      message: error.toString() 
+    })).setMimeType(ContentService.MimeType.JSON);
+  } finally {
+    lock.releaseLock();
+  }
+}
+`;
